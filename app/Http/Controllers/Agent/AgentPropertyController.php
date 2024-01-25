@@ -9,6 +9,7 @@ use App\Models\MultiImage;
 use App\Models\PackagePlan;
 use App\Models\PropertyType;
 use Illuminate\Http\Request;
+use App\Models\PropertyMessage;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -418,4 +419,19 @@ class AgentPropertyController extends Controller
         return $pdf->download('invoice.pdf'); 
     }
 
+
+    public function agentPropertyMessage() {
+        $id = Auth::user()->id;
+        $agentMessages = PropertyMessage::where('agent_id',$id)->get();
+        return view('agent.message.all_messages',compact('agentMessages'));
+    }
+
+
+    public function agentMessageDetails($id) {
+        $ids = Auth::user()->id;
+        $agentMessages = PropertyMessage::where('agent_id',$ids)->get();
+        $messageDetails = PropertyMessage::findOrFail($id);
+        
+        return view('agent.message.messages_details',compact('agentMessages','messageDetails'));
+    }
 }

@@ -34,6 +34,7 @@ Route::get('/dashboard', function () {
 
 Route::get('property/details/{id}/{slug}', [IndexController::class, 'propertyDetails']);
 Route::get('add-to-wishlist/{property_id}', [WishlistController::class, 'AddToWishList']);
+Route::post('property/message', [IndexController::class, 'propertyMessage'])->name("property.message");
 
 
 
@@ -57,8 +58,8 @@ Route::controller(CompareController::class)->group(function(){
     Route::get('addToCompare/{id}', "addToCompare");
     Route::get('user/compare', "userCompare")->name('user.compare');
 
-    // Route::get('/getWishListProperty', "getWishListProperty");
-    // Route::get('/wishlistRemove/{id}',"wishlistRemove");
+    Route::get('/getCompareProperty', "getCompareProperty");
+    Route::get('/compareRemove/{id}',"compareRemove");
     });
     
 
@@ -121,6 +122,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/admin/package/history', 'PackageHistory')->name('admin.package.history');
         Route::get('/admin/package/invoice/{id}', 'PackageInvoice')->name('package.invoice');
 
+        Route::get('/admin/peroperty/message', 'adminPropertyMessage')->name('admin.property.message');
+        Route::get('/admin/message/details/{id}', 'adminMessageDetails')->name('admin.message.details');
+       
+        
         
     });
 
@@ -174,6 +179,9 @@ Route::middleware(['auth', 'role:agent'])->group(function () {
 
         Route::get('/package/history', 'packageHistory')->name('package.history');
         Route::get('/agent/package/invoice/{id}', 'agentPackageInvoice')->name('agent.package.invoice');
+        
+        Route::get('/agent/peroperty/message', 'agentPropertyMessage')->name('agent.property.message');
+        Route::get('/agent/message/details/{id}', 'agentMessageDetails')->name('agent.message.details');
         
     });
 

@@ -298,5 +298,141 @@ function addToCompare(id) {
 
 </script>
 
+
+
+
+
+<script type="text/javascript">
+    function compare(){
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "/getCompareProperty/",
+            
+            success:function(response){
+                console.log(response);
+                var rows = ""
+                $.each(response,function(key,value){
+                console.log(value);
+                    rows += ` <tr>
+                                <th>Property Info</th>
+                                <th>
+                                    <figure class="image-box"><img src="${value.property.property_thumbnail}" alt=""></figure>
+                                    <div class="title">${value.property.property_name}</div>
+                                    <div class="price">$${value.property.min_price}</div>
+                                </th>
+                               
+                            </tr>    
+                            <tr>
+                                <td>
+                                    <p>City</p>
+                                </td>
+                                <td>
+                                    <p>${value.property.city}</p>
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Area</p>
+                                </td>
+                                <td>
+                                    <p>${value.property.property_size} Sq Ft</p>
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Rooms</p>
+                                </td>
+                                <td>
+                                    <p>${value.property.bedrooms} </p>
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Bathrooms</p>
+                                </td>
+                                <td>
+                                    <p>${value.property.bathrooms} </p>
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Garage</p>
+                                </td>
+                                <td>
+                                    <p>${value.property.garage} </p>
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Delete </p>
+                                </td>
+                                <td>
+                                    <a type="submit" class="text-body" id=${value.id} onclick="compareRemove(this.id)"><i class="fa fa-trash"></i></a>
+                                </td>
+                                </tr>
+                            
+                            `
+
+                });
+                $('#compare').html(rows);
+            }
+        })
+    }
+
+    function compareRemove(id) {
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "/compareRemove/"+id,
+
+        success: function (data) {
+            compare(); 
+            const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top-end',
+                  
+                  showConfirmButton: false,
+                  timer: 3000 
+            })
+            if ($.isEmptyObject(data.error)) {
+                    
+                    Toast.fire({
+                    type: 'success',
+                    icon: 'success', 
+                    title: data.success, 
+                    })
+
+            }else{
+               
+           Toast.fire({
+                    type: 'error',
+                    icon: 'error', 
+                    title: data.error, 
+                    })
+                }
+
+              // End Message  
+
+        }
+    })
+}
+
+
+    compare();
+
+
+    
+
+    </script>
+
+
+
+
 </body><!-- End of .page_wrapper -->
 </html>

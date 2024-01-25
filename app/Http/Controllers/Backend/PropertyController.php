@@ -10,9 +10,11 @@ use App\Models\MultiImage;
 use App\Models\PackagePlan;
 use App\Models\PropertyType;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\PropertyMessage;
 // use Haruncpi\LaravaelIdGenerator\IdGenerator;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 use Haruncpi\LaravelIdGenerator\IdGenerator as IdGenerator;
 
@@ -365,5 +367,22 @@ class PropertyController extends Controller
         ]);
         return $pdf->download('invoice.pdf');
         
+    }
+
+
+
+    public function adminPropertyMessage() {
+        $id = Auth::user()->id;
+        $adminMessages = PropertyMessage::where('agent_id',$id)->get();
+        return view('admin.message.all_messages',compact('adminMessages'));
+    }
+
+
+    public function adminMessageDetails($id) {
+        $ids = Auth::user()->id;
+        $adminMessages = PropertyMessage::where('agent_id',$ids)->get();
+        $messageDetails = PropertyMessage::findOrFail($id);
+        
+        return view('admin.message.messages_details',compact('adminMessages','messageDetails'));
     }
 }

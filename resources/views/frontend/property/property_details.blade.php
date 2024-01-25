@@ -252,24 +252,61 @@
                                         <div class="btn-box"><a href="agents-details.html">View Listing</a></div>
                                     </div>
                                 </div>
+
+
+
                                 <div class="form-inner">
-                                    <form action="property-details.html" method="post" class="default-form">
-                                        <div class="form-group">
-                                            <input type="text" name="name" placeholder="Your name" required="">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="email" name="email" placeholder="Your Email" required="">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" name="phone" placeholder="Phone" required="">
-                                        </div>
-                                        <div class="form-group">
-                                            <textarea name="message" placeholder="Message"></textarea>
-                                        </div>
-                                        <div class="form-group message-btn">
-                                            <button type="submit" class="theme-btn btn-one">Send Message</button>
-                                        </div>
-                                    </form>
+
+@auth
+
+<form action="{{route('property.message')}}" method="post" class="default-form">
+    @csrf
+    <input type="hidden" name="property_id" value="{{$property->id}}">
+    <input type="hidden" name="agent_id" value="{{$property->agent_id}}">
+    <div class="form-group">
+        <input type="text" name="msg_name" placeholder="Your name" value="{{$userData->name}}" required="">
+    </div>
+    <div class="form-group">
+        <input type="email" name="msg_email" placeholder="Your Email" value="{{$userData->email}}" required="">
+    </div>
+    <div class="form-group">
+        <input type="text" name="msg_phone" placeholder="Phone" value="{{$userData->phone}}" required="">
+    </div>
+    <div class="form-group">
+        <textarea name="message" placeholder="Message"></textarea>
+    </div>
+    <div class="form-group message-btn">
+        <button type="submit" class="theme-btn btn-one">Send Message</button>
+    </div>
+</form>
+
+@else
+
+<form action="{{route('property.message')}}" method="post" class="default-form">
+    @csrf
+    <input type="hidden" name="property_id" value="{{$property->id}}">
+    <input type="hidden" name="agent_id" value="{{$property->agent_id}}">
+    <div class="form-group">
+        <input type="text" name="msg_name" placeholder="Your name" required="">
+    </div>
+    <div class="form-group">
+        <input type="email" name="msg_email" placeholder="Your Email" required="">
+    </div>
+    <div class="form-group">
+        <input type="text" name="msg_phone" placeholder="Phone" required="">
+    </div>
+    <div class="form-group">
+        <textarea name="message" placeholder="Message"></textarea>
+    </div>
+    <div class="form-group message-btn">
+        <button type="submit" class="theme-btn btn-one">Send Message</button>
+    </div>
+</form>
+
+
+@endauth
+
+                                    
                                 </div>
                             </div>
                             <div class="calculator-widget sidebar-widget">

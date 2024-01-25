@@ -11,8 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('remaining_payments', function (Blueprint $table) {
+        Schema::create('property_messages', function (Blueprint $table) {
             $table->id();
+            $table->integer("user_id");
+            $table->integer("agent_id");
+            $table->integer("property_id");
+            $table->string("msg_name");
+            $table->string("msg_email");
+            $table->string("msg_phone");
+            $table->text("message");
             $table->timestamps();
         });
     }
@@ -22,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('remaining_payments');
+        Schema::dropIfExists('property_messages');
     }
 };

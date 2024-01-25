@@ -44,7 +44,7 @@ public function getWishListProperty()
 }    
 
 
-function wishlistRemove($id) {
+public function wishlistRemove($id) {
     Wishlist::where('user_id',Auth::id())->where('id',$id)->delete();
     return \response()->json(['success'=>'successfully property remove']);
 }

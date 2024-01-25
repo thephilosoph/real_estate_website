@@ -19,9 +19,9 @@ class CompareController extends Controller
                     "user_id"=> Auth::id(),
                     "property_id"=>$id,
                 ]);
-                return response()->json(['success'=>"Successfully Added To Wishlist"]);
+                return response()->json(['success'=>"Successfully Added To compare list"]);
             }else{
-                return response()->json(['error'=>"the property is already on your Wishlist"]);
+                return response()->json(['error'=>"the property is already on your compare list"]);
 
             }
         }else{
@@ -37,5 +37,21 @@ class CompareController extends Controller
     {
         // $user = Auth::user();
         return view('frontend.dashboard.compare');
+    }
+
+
+
+    public function getCompareProperty() {
+
+    $compare = Compare::with('property')->where('user_id',Auth::user()->id)->latest()->get();
+    return response()->json($compare);   
+    
+    }
+
+
+    
+    public function compareRemove($id) {
+        Compare::where('user_id',Auth::id())->where('id',$id)->delete();
+        return \response()->json(['success'=>'successfully Compare remove']);
     }
 }
