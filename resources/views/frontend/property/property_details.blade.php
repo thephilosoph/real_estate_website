@@ -29,14 +29,14 @@
                         <div class="author-info clearfix">
                             <div class="author-box pull-left">
                                 @if ($property->user->role == 'agent')
-                                        
+
                                 <figure class="author-thumb"><img src="{{(!empty($property->user->photo)) ? url('uploade/agent_images/'.$property->user->photo) : url('uploade/no_image.jpg')}}" alt=""></figure>
                                 @else
-                                    
+
                                 <figure class="author-thumb"><img src="{{(!empty($property->user->photo)) ? url('uploade/user_images/'.$property->user->photo) : url('uploade/no_image.jpg')}}" alt=""></figure>
                                 @endif
                                 <h6>{{$property->user->name}}</h6>
-            
+
                             </div>
                             <ul class="rating clearfix pull-left">
                                 <li><i class="icon-39"></i></li>
@@ -106,12 +106,12 @@
                                 <ul class="list clearfix">
                                     @foreach ($aminities as $aminity)
                                     @if (in_array($aminity->id,$property_aminities))
-                                        
+
                                     <li>{{$aminity->name}}</li>
-                                    
+
                                     @endif
                                     @endforeach
-                                    
+
                                 </ul>
                             </div>
 
@@ -121,20 +121,20 @@
                                 </div>
                                 <ul class="info clearfix">
                                     <li><span>Address:</span> {{$property->address}}</li>
-                                    <li><span>State:</span> {{$property->state}}</li>
+                                    <li><span>State:</span> {{$property['state']['state_name']}}</li>
                                     <li><span>City:</span> {{$property->city}}</li>
                                     <li><span>Neighborhood:</span> {{$property->neighborhood}}</li>
                                     <li><span>Zip/Postal Code:</span> {{$property->postal_code}}</li>
                                 </ul>
                                 <div class="google-map-area">
-                                    <div 
-                                        class="google-map" 
-                                        id="contact-google-map" 
-                                        data-map-lat="{{$property->latitude}}" 
-                                        data-map-lng="{{$property->longtude}}" 
-                                        data-icon-path="{{asset('frontend/assets/images/icons/map-marker.png')}}"  
-                                        data-map-title="Brooklyn, New York, United Kingdom" 
-                                        data-map-zoom="12" 
+                                    <div
+                                        class="google-map"
+                                        id="contact-google-map"
+                                        data-map-lat="{{$property->latitude}}"
+                                        data-map-lng="{{$property->longtude}}"
+                                        data-icon-path="{{asset('frontend/assets/images/icons/map-marker.png')}}"
+                                        data-map-title="Brooklyn, New York, United Kingdom"
+                                        data-map-zoom="12"
                                         data-markers='{
                                             "marker-1": [40.712776, -74.005974, "<h4>Branch Office</h4><p>77/99 New York</p>","{{asset('frontend/assets/images/icons/map-marker.png')}}"]
                                         }'>
@@ -152,7 +152,7 @@
                                         <div class="inner">
                                             <h5>Places:</h5>
                                             @foreach ($facilities as $facility)
-                                                
+
                                             <div class="box clearfix">
                                                 <div class="text pull-left">
                                                     <h6>{{$facility->facility_name}}<span>({{$facility->distance}} km)</span></h6>
@@ -167,7 +167,7 @@
                                             </div>
                                             @endforeach
 
-  
+
                                         </div>
                                     </div>
 
@@ -236,10 +236,10 @@
                             <div class="author-widget sidebar-widget">
                                 <div class="author-box">
                                     @if ($property->user->role == 'agent')
-                                        
+
                                 <figure class="author-thumb"><img src="{{(!empty($property->user->photo)) ? url('uploade/agent_images/'.$property->user->photo) : url('uploade/no_image.jpg')}}" alt=""></figure>
                                 @else
-                                    
+
                                 <figure class="author-thumb"><img src="{{(!empty($property->user->photo)) ? url('uploade/user_images/'.$property->user->photo) : url('uploade/no_image.jpg')}}" alt=""></figure>
                                 @endif
                                     <div class="inner">
@@ -306,7 +306,7 @@
 
 @endauth
 
-                                    
+
                                 </div>
                             </div>
                             <div class="calculator-widget sidebar-widget">
@@ -349,14 +349,14 @@
                     </div>
                 </div>
                 @if (count($relatedProperty)>0)
-                    
+
                 <div class="similar-content">
                     <div class="title">
                         <h4>Similar Properties</h4>
                     </div>
                     <div class="row clearfix">
                         @foreach ($relatedProperty as $related)
-                            
+
                         <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
                             <div class="feature-block-one wow fadeInUp animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                                 <div class="inner-box">
@@ -370,10 +370,10 @@
                                         <div class="author-info clearfix">
                                             <div class="author pull-left">
                                                 @if ($property->user->role == 'agent')
-                                        
+
                                 <figure class="author-thumb"><img src="{{(!empty($related->user->photo)) ? url('uploade/agent_images/'.$related->user->photo) : url('uploade/no_image.jpg')}}" alt=""></figure>
                                 @else
-                                    
+
                                 <figure class="author-thumb"><img src="{{(!empty($related->user->photo)) ? url('uploade/user_images/'.$related->user->photo) : url('uploade/no_image.jpg')}}" alt=""></figure>
                                 @endif
                                                 <h6>{{$related->user->name}}</h6>
@@ -404,7 +404,7 @@
                         </div>
                         @endforeach
 
-                       
+
 
                     </div>
 

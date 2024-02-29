@@ -1,6 +1,6 @@
 @extends('frontend.frontend_dashboard')
 @section('main')
-    
+
 @php
     $user = Auth::user();
 @endphp
@@ -39,16 +39,16 @@
 <img src="{{(!empty($user->photo)) ? url('uploade/user_images/'.$user->photo) : url('uploade/no_image.jpg')}}" alt=""></a></figure>
 <h5><a href="blog-details.html">{{$user->name}} </a></h5>
  <p>{{$user->email}}</p>
-                </div> 
+                </div>
             </div>
-        </div> 
+        </div>
 
 <div class="sidebar-widget category-widget">
-  
+
 @include('frontend.dashboard.sidebar')
 
-</div> 
-                 
+</div>
+
 </div>
 </div>
 
@@ -57,10 +57,10 @@
     <div class="blog-details-content">
         <div class="news-block-one">
             <div class="inner-box">
-                
+
                 <div class="lower-content">
                     <h3>Including Animation In Your Design System.</h3>
-                    
+
 
 
 
@@ -90,26 +90,26 @@
 </div>
 </div>
 
-</div> 
+</div>
 
                 </div>
             </div>
         </div>
-         
-        
+
+
     </div>
 <div class="blog-details-content">
         <div class="news-block-one">
             <div class="inner-box">
-                
+
                 <div class="lower-content">
                     <h3>Activity Logs</h3>
                   <hr>
                 </div>
             </div>
-        </div>        
+        </div>
     </div>
-</div> 
+</div>
 
 
 </div>

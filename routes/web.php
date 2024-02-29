@@ -9,6 +9,7 @@ use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Backend\AminityController;
 use App\Http\Controllers\Backend\PropertyController;
+use App\Http\Controllers\Backend\StateController;
 use App\Http\Controllers\Frontend\CompareController;
 use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\Agent\AgentPropertyController;
@@ -35,8 +36,11 @@ Route::get('/dashboard', function () {
 Route::get('property/details/{id}/{slug}', [IndexController::class, 'propertyDetails']);
 Route::get('add-to-wishlist/{property_id}', [WishlistController::class, 'AddToWishList']);
 Route::post('property/message', [IndexController::class, 'propertyMessage'])->name("property.message");
-
-
+Route::get('/agent/details/{id}', [IndexController::class, 'agentDetails'])->name('agent.details');
+Route::post('agent/details/message', [IndexController::class, 'agentDetailsMessage'])->name("agent.details.message");
+Route::get('/rent/property', [IndexController::class, 'rentProperty'])->name('rent.property');
+Route::get('/buy/property', [IndexController::class, 'buyProperty'])->name('buy.property');
+Route::get('/type/property/{id}', [IndexController::class, 'typeProperty'])->name('property.type');
 
 Route::middleware('auth')->group(function () {
     Route::get('user/profile', [UserController::class, 'edit'])->name('user.profile.edit');
@@ -61,7 +65,7 @@ Route::controller(CompareController::class)->group(function(){
     Route::get('/getCompareProperty', "getCompareProperty");
     Route::get('/compareRemove/{id}',"compareRemove");
     });
-    
+
 
 
 });
@@ -99,6 +103,15 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/delete/Aminity/{id}', 'deleteAminity')->name('delete.aminity');
     });
 
+    Route::controller(StateController::class)->group(function () {
+        Route::get('/all/state', 'allState')->name('all.state');
+        Route::get('/add/state', 'addState')->name('add.state');
+        Route::post('/store/state', 'storeState')->name('store.state');
+        Route::get('/edit/state/{id}', 'editState')->name('edit.state');
+        Route::post('/edit/state', 'updateState')->name('update.state');
+        Route::get('/delete/state/{id}', 'deleteState')->name('delete.state');
+    });
+
 
 
 
@@ -124,9 +137,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
         Route::get('/admin/peroperty/message', 'adminPropertyMessage')->name('admin.property.message');
         Route::get('/admin/message/details/{id}', 'adminMessageDetails')->name('admin.message.details');
-       
-        
-        
+
+
+
     });
 
     Route::controller(AdminController::class)->group(function () {
@@ -137,12 +150,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/edit/agent', 'updateAgent')->name('update.agent');
         Route::get('/delete/agent/{id}', 'deleteAgent')->name('delete.agent');
         Route::get('/changeStatus', 'changeStatus');
-        
+
 
     });
 
 
-    
+
 });
 
 Route::middleware(['auth', 'role:agent'])->group(function () {
@@ -179,10 +192,11 @@ Route::middleware(['auth', 'role:agent'])->group(function () {
 
         Route::get('/package/history', 'packageHistory')->name('package.history');
         Route::get('/agent/package/invoice/{id}', 'agentPackageInvoice')->name('agent.package.invoice');
-        
+
         Route::get('/agent/peroperty/message', 'agentPropertyMessage')->name('agent.property.message');
         Route::get('/agent/message/details/{id}', 'agentMessageDetails')->name('agent.message.details');
-        
+
+
     });
 
 

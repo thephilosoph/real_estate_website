@@ -41,7 +41,28 @@
             </ul>
           </div>
         </li>
-        
+
+
+          <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#state" role="button" aria-expanded="false" aria-controls="state">
+                  <i class="link-icon" data-feather="mail"></i>
+                  <span class="link-title">Property State</span>
+                  <i class="link-arrow" data-feather="chevron-down"></i>
+              </a>
+              <div class="collapse" id="type">
+                  <ul class="nav sub-menu">
+                      <li class="nav-item">
+                          <a href="{{route('all.state')}}" class="nav-link">All Property States</a>
+                      </li>
+                      <li class="nav-item">
+                          <a href="{{route('add.state')}}" class="nav-link">Add Property State</a>
+                      </li>
+                      <li class="nav-item">
+                          <a href="pages/email/compose.html" class="nav-link">Compose</a>
+                      </li>
+                  </ul>
+              </div>
+          </li>
 
 
         <li class="nav-item">
@@ -109,7 +130,7 @@
               <li class="nav-item">
                 <a href="pages/ui-components/alerts.html" class="nav-link">Add Agent</a>
               </li>
-              
+
             </ul>
           </div>
         </li>
@@ -127,12 +148,12 @@
               <li class="nav-item">
                 <a href="pages/advanced-ui/owl-carousel.html" class="nav-link">Owl carousel</a>
               </li>
-              
+
             </ul>
           </div>
         </li>
-        
-        
+
+
         <li class="nav-item nav-category">Docs</li>
         <li class="nav-item">
           <a href="#" target="_blank" class="nav-link">

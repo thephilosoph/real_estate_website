@@ -6,8 +6,8 @@
 
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
-            <a href="{{route('add.type')}}" class="btn btn-inverse-info">Add Property</a>
-           
+            <a href="{{route('add.state')}}" class="btn btn-inverse-info">Add State</a>
+
         </ol>
     </nav>
 
@@ -28,7 +28,7 @@
         </thead>
         <tbody>
             @foreach ($types as $key => $item)
-                
+
             <tr>
                 <td>{{$key+1}}</td>
                 <td>{{$item->name}}</td>
@@ -37,10 +37,10 @@
                     <a href="{{route('edit.type',$item->id)}}" class="btn btn-inverse-warning">Edit</a>
                     <a href="{{route('delete.type',$item->id)}}" class="btn btn-inverse-danger" id="delete">Delete</a>
                 </td>
-                
+
             </tr>
             @endforeach
-          
+
         </tbody>
       </table>
     </div>

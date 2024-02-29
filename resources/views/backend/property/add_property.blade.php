@@ -5,12 +5,12 @@
 
 <div class="page-content">
 
-    
+
     <div class="row profile-body">
 
       <!-- middle wrapper start -->
       <div class="col-md-12 col-xl-12 middle-wrapper">
-        <div class="row"> 
+        <div class="row">
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">Add Property</h6>
@@ -117,7 +117,12 @@
                                 <div class="col-sm-3">
                                     <div class="mb-3">
                                         <label class="form-label">State</label>
-                                        <input type="text" class="form-control" name="state">
+                                        <select name="state" class="form-select" id="form-select">
+                                            <option selected disabled>Select State</option>
+                                            @foreach ($states as $state)
+                                                <option value="{{$state->id}}">{{$state->state_name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div><!-- Col -->
 
@@ -151,7 +156,7 @@
                                     </div>
                                 </div><!-- Col -->
 
-                                
+
                             </div><!-- Row -->
 
 
@@ -194,7 +199,7 @@
                                             @foreach ($aminities as $aminity)
                                             <option value="{{$aminity->id}}">{{$aminity->name}}</option>
                                             @endforeach
-                                        </select>                                   
+                                        </select>
                                      </div>
                                 </div><!-- Col -->
                                 <div class="col-sm-4">
@@ -277,15 +282,15 @@
                                       <a class="btn btn-success addeventmore"><i class="fa fa-plus-circle"></i> Add More..</a>
                                 </div>
                          </div> <!---end row-->
-        
-        
-        
-         
+
+
+
+
                          <button type="submit" class="btn btn-primary submit">Submit form</button>
                         </form>
                 </div>
             </div>
-  
+
         </div>
       </div>
 
@@ -299,17 +304,17 @@
                   rules: {
                     property_name: {
                           required : true,
-                      }, 
-                      
+                      },
+
                   },
                   messages :{
                     property_name: {
                           required : 'Please Enter Property Name',
-                      }, 
-                       
-      
+                      },
+
+
                   },
-                  errorElement : 'span', 
+                  errorElement : 'span',
                   errorPlacement: function (error,element) {
                       error.addClass('invalid-feedback');
                       element.closest('.form-group').append(error);
@@ -322,7 +327,7 @@
                   },
               });
           });
-          
+
       </script>
 
 
@@ -340,34 +345,34 @@ function mainThumURL(input){
 
 
 
-<script> 
- 
+<script>
+
     $(document).ready(function(){
      $('#multiImg').on('change', function(){ //on file input change
         if (window.File && window.FileReader && window.FileList && window.Blob) //check File API supported browser
         {
             var data = $(this)[0].files; //this file data
-             
+
             $.each(data, function(index, file){ //loop though each file
                 if(/(\.|\/)(gif|jpe?g|png|webp)$/i.test(file.type)){ //check supported file type
                     var fRead = new FileReader(); //new filereader
                     fRead.onload = (function(file){ //trigger function on successful read
                     return function(e) {
                         var img = $('<img/>').addClass('thumb').attr('src', e.target.result) .width(100)
-                    .height(80); //create image element 
+                    .height(80); //create image element
                         $('#preview_img').append(img); //append image to output element
                     };
                     })(file);
                     fRead.readAsDataURL(file); //URL representing the file's data.
                 }
             });
-             
+
         }else{
             alert("Your browser doesn't support File API!"); //if File API is absent
         }
      });
     });
-     
+
     </script>
 
 
@@ -379,7 +384,7 @@ function mainThumURL(input){
        <div class="whole_extra_item_delete" id="whole_extra_item_delete">
           <div class="container mt-2">
              <div class="row">
-               
+
                 <div class="form-group col-md-4">
                    <label for="facility_name">Facilities</label>
                    <select name="facility_name[]" id="facility_name" class="form-control">
@@ -409,10 +414,10 @@ function mainThumURL(input){
           </div>
        </div>
     </div>
- </div>      
- 
- 
- 
+ </div>
+
+
+
              <!----For Section-------->
  <script type="text/javascript">
     $(document).ready(function(){
@@ -429,9 +434,9 @@ function mainThumURL(input){
     });
  </script>
  <!--========== End of add multiple class with ajax ==============-->
- 
- 
- 
+
+
+
 
 
 

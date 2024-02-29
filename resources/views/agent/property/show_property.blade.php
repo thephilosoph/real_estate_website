@@ -12,12 +12,12 @@
     <div class="card">
       <div class="card-body">
                         <h6 class="card-title">Property Details</h6>
-                        
+
                         <div class="table-responsive">
                                 <table class="table table-striped">
-                                    
+
                                     <tbody>
-                                        
+
                                         <tr>
                                             <th>Property Name</th>
                                             <td><code>{{$property->property_name}}</code></td>
@@ -26,7 +26,7 @@
                                             <th>Property Status</th>
                                             <td><code>{{$property->property_status}}</code></td>
                                         </tr>
-                                   
+
                                         <tr>
                                             <th>Property Min Price</th>
                                             <td><code>{{$property->min_price}}</code></td>
@@ -80,7 +80,7 @@
 
                                         <tr>
                                             <th>Property State</th>
-                                            <td><code>{{$property->state}}</code></td>
+                                            <td><code>{{$property['state']['state_name']}}</code></td>
                                         </tr>
 
                                         <tr>
@@ -92,8 +92,8 @@
                                             <th>Property Thumbnail</th>
                                             <td><img src="{{asset($property->property_thumbnail)}}" style="width: 100px; height: 70px;"></td>
                                         </tr>
-                                       
-                                       
+
+
                                         <tr>
                                         <th>Status</th>
                                         <td>
@@ -110,7 +110,7 @@
                                             <th>Property Status</th>
                                             <td><code>{{$property->property_status}}</code></td>
                                         </tr>
-                                       
+
                                     </tbody>
                                 </table>
                         </div>
@@ -123,7 +123,7 @@
                         <h6 class="card-title">Hoverable Table</h6>
                         <div class="table-responsive">
                                 <table class="table table-striped">
-                                    
+
                                     <tbody>
 
                                         <tr>
@@ -171,11 +171,11 @@
                                                     @foreach ($aminities as $aminity)
                                                     <option {{(in_array($aminity->id,$property_aminities))  ? 'selected' :""}} value="{{$aminity->id}}">{{$aminity->name}}</option>
                                                     @endforeach
-                                                </select>       
+                                                </select>
                                             </td>
                                         </tr>
-                                       
-                                        
+
+
 
 
                                         <tr>
@@ -186,24 +186,24 @@
                                                     <code>Admin</code>
                                                 @else
                                                 <code>{{$property['user']['name']}}</code>
-                                                    
+
                                                 @endif
-        
+
                                             </td>
                                         </tr>
 
-                                       
+
                                     </tbody>
                                 </table>
 
-                              
+
                         </div>
       </div>
     </div>
             </div>
         </div>
 
-      
+
       </div>
     </div>
 </div>
