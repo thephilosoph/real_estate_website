@@ -1,6 +1,10 @@
 @extends('frontend.frontend_dashboard')
 @section('main')
-    
+
+    @section('title')
+    N-RealEstet
+    @endsection
+
 @include('frontend.home.banner')
 <!-- banner-section end -->
 

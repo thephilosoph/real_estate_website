@@ -28,7 +28,10 @@ class Property extends Model
         return $this->belongsTo(User::class, 'agent_id', 'id');
     }
 
-
+    public function pstate(): BelongsTo
+    {
+        return $this->belongsTo(State::class, 'state', 'id');
+    }
     public function getRouteKeyName()
     {
         return 'property_slug';

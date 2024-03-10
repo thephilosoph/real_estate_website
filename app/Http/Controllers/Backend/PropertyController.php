@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\State;
 use App\Models\User;
 use App\Models\Aminity;
 use App\Models\Facility;
@@ -31,8 +32,9 @@ class PropertyController extends Controller
     {
         $aminities = Aminity::latest()->get();
         $types = PropertyType::latest()->get();
+        $states = State::latest()->get();
         $activeAgents = User::where('status', 'active')->where('role', 'agent')->latest()->get();
-        return view('backend.property.add_property', compact('aminities', 'types', 'activeAgents'));
+        return view('backend.property.add_property', compact('states','aminities', 'types', 'activeAgents'));
     }
 
 
@@ -116,6 +118,7 @@ class PropertyController extends Controller
 
     public function editProperty($id)
     {
+        $states = State::latest()->get();
         $property = Property::find($id);
         $property_aminities = explode(',', $property->aminities_id);
         $multiImages = MultiImage::where('property_id', $id)->get();
@@ -123,7 +126,7 @@ class PropertyController extends Controller
         $facilities = Facility::where('property_id', $id)->get();
         $types = PropertyType::latest()->get();
         $activeAgents = User::where('status', 'active')->where('role', 'agent')->latest()->get();
-        return view('backend.property.edit_properties', compact('property', 'facilities', 'property_aminities', 'aminities', 'types', 'activeAgents', 'multiImages'));
+        return view('backend.property.edit_properties', compact('states','property', 'facilities', 'property_aminities', 'aminities', 'types', 'activeAgents', 'multiImages'));
     }
 
 
@@ -362,11 +365,11 @@ class PropertyController extends Controller
     public function PackageInvoice($id){
         $packageHistory = PackagePlan::where('id',$id)->first();
         $pdf = Pdf::loadView('backend.package.package_history_invoice',compact('packageHistory'))->setPaper('a4')->setOption([
-            'tempDir' => public_path(), 
-            'chroot' => public_path(), 
+            'tempDir' => public_path(),
+            'chroot' => public_path(),
         ]);
         return $pdf->download('invoice.pdf');
-        
+
     }
 
 
@@ -382,7 +385,7 @@ class PropertyController extends Controller
         $ids = Auth::user()->id;
         $adminMessages = PropertyMessage::where('agent_id',$ids)->get();
         $messageDetails = PropertyMessage::findOrFail($id);
-        
+
         return view('admin.message.messages_details',compact('adminMessages','messageDetails'));
     }
 }

@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Agent;
 
+use App\Mail\ScheduleMail;
 use App\Models\Aminity;
 use App\Models\Facility;
 use App\Models\Property;
 use App\Models\MultiImage;
 use App\Models\PackagePlan;
 use App\Models\PropertyType;
+use App\Models\Schedule;
+use App\Models\State;
 use Illuminate\Http\Request;
 use App\Models\PropertyMessage;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -15,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
 use Haruncpi\LaravelIdGenerator\IdGenerator as IdGenerator;
 
@@ -31,22 +35,23 @@ class AgentPropertyController extends Controller
         $response = Gate::inspect('property-add');
 
             if($response->allowed()){
+                $states = State::latest()->get();
                 $aminities = Aminity::latest()->get();
                 $types = PropertyType::latest()->get();
-                return view('agent.property.add_property', compact('aminities', 'types'));
+                return view('agent.property.add_property', compact('states','aminities', 'types'));
             }
             else{
                 return redirect()->route('buy.package');
 
             }
 
-        
+
     }
 
 
     public function storeProperty(Request $request)
     {
-        $user = Auth::user(); 
+        $user = Auth::user();
         $image = $request->file('property_thumbnail');
         $generatedName = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
         Image::make($image)->resize(370, 250)->save(public_path('/uploade/property/thumbnail/' . $generatedName));
@@ -133,7 +138,8 @@ class AgentPropertyController extends Controller
         $aminities = Aminity::latest()->get();
         $facilities = Facility::where('property_id', $id)->get();
         $types = PropertyType::latest()->get();
-        return view('agent.property.edit_properties', compact('property', 'facilities', 'property_aminities', 'aminities', 'types', 'multiImages'));
+        $states = State::latest()->get();
+        return view('agent.property.edit_properties', compact('states','property', 'facilities', 'property_aminities', 'aminities', 'types', 'multiImages'));
     }
 
 
@@ -349,11 +355,11 @@ class AgentPropertyController extends Controller
     {
         $user = Auth::user();
         PackagePlan::create([
-        "user_id"=> $user->id, 
-        "name"=> "Business", 
-        "invoice"=> "ERS".mt_rand(10000000,99999999), 
-        "credits"=> '3', 
-        "amount"=> '20', 
+        "user_id"=> $user->id,
+        "name"=> "Business",
+        "invoice"=> "ERS".mt_rand(10000000,99999999),
+        "credits"=> '3',
+        "amount"=> '20',
         ]);
 
         $user->update([
@@ -368,7 +374,7 @@ class AgentPropertyController extends Controller
         return redirect()->route('all.agent.property')->with($notification);
     }
 
-    
+
 
 
     public function buyProfessionalPlan()
@@ -382,11 +388,11 @@ class AgentPropertyController extends Controller
     {
         $user = Auth::user();
         PackagePlan::create([
-        "user_id"=> $user->id, 
-        "name"=> "Professional", 
-        "invoice"=> "ERS".mt_rand(10000000,99999999), 
-        "credits"=> '10', 
-        "amount"=> '50', 
+        "user_id"=> $user->id,
+        "name"=> "Professional",
+        "invoice"=> "ERS".mt_rand(10000000,99999999),
+        "credits"=> '10',
+        "amount"=> '50',
         ]);
 
         $user->update([
@@ -413,10 +419,10 @@ class AgentPropertyController extends Controller
     public function agentPackageInvoice($id){
         $packageHistory = PackagePlan::where('id',$id)->first();
         $pdf = Pdf::loadView('agent.package.package_history_invoice',compact('packageHistory'))->setPaper('a4')->setOption([
-            'tempDir' => public_path(), 
-            'chroot' => public_path(), 
+            'tempDir' => public_path(),
+            'chroot' => public_path(),
         ]);
-        return $pdf->download('invoice.pdf'); 
+        return $pdf->download('invoice.pdf');
     }
 
 
@@ -431,7 +437,42 @@ class AgentPropertyController extends Controller
         $ids = Auth::user()->id;
         $agentMessages = PropertyMessage::where('agent_id',$ids)->get();
         $messageDetails = PropertyMessage::findOrFail($id);
-        
+
         return view('agent.message.messages_details',compact('agentMessages','messageDetails'));
+    }
+
+
+    public function agentScheduleRequest()
+    {
+        $messages = Schedule::where('agent_id',Auth::user()->id)->get();
+        return view('agent.schedule.schedule_request',compact('messages'));
+    }
+
+    public function agentScheduleDetails($id)
+    {
+        $schedule = Schedule::findOrFail($id);
+        return view('agent.schedule.schedule_details',compact('schedule'));
+    }
+
+    public function agentUpdateSchedule(Request $request)
+    {
+        Schedule::findOrFail($request->id)->update([
+            'status'=>1,
+        ]);
+        //sending emails
+
+        $sendmail = Schedule::findOrFail($request->id);
+        $data = [
+            'tour_date'=>$sendmail->tour_date,
+            'tour_time'=>$sendmail->tour_time,
+        ];
+        Mail::to($request->email)->send(new ScheduleMail($data));
+
+        $notification = array([
+            "message" => "request have confirmed successfully",
+            "alert-type" => "success",
+        ]);
+
+        return redirect()->back()->with($notification);
     }
 }

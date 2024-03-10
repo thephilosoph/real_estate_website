@@ -1,5 +1,11 @@
 @extends('frontend.frontend_dashboard')
 @section('main')
+
+
+    @section('title')
+        {{$property->property_name}}
+    @endsection
+
 {{-- @dd($property) --}}
         <!--Page Title-->
         <section class="page-title-two bg-color-1 centred">
@@ -121,7 +127,7 @@
                                 </div>
                                 <ul class="info clearfix">
                                     <li><span>Address:</span> {{$property->address}}</li>
-                                    <li><span>State:</span> {{$property['state']['state_name']}}</li>
+                                    <li><span>State:</span> {{$property['pstate']['state_name']}}</li>
                                     <li><span>City:</span> {{$property->city}}</li>
                                     <li><span>Neighborhood:</span> {{$property->neighborhood}}</li>
                                     <li><span>Zip/Postal Code:</span> {{$property->postal_code}}</li>
@@ -181,38 +187,27 @@
                                     <iframe width="853" height="480" src="{{$property->property_video}}" title="The WORLD&#39;S SMOOTHEST cinematic PROPERTY VIDEO | SONY FX6" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                                 </figure>
                             </div>
+
                             <div class="schedule-box content-widget">
                                 <div class="title-box">
                                     <h4>Schedule A Tour</h4>
                                 </div>
                                 <div class="form-inner">
-                                    <form action="property-details.html" method="post">
+                                    <form action="{{route('store.schedule')}}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="property_id" value="{{$property->id}}">
+                                        <input type="hidden" name="agent_id" value="{{$property->agent_id}}">
                                         <div class="row clearfix">
                                             <div class="col-lg-6 col-md-12 col-sm-12 column">
                                                 <div class="form-group">
                                                     <i class="far fa-calendar-alt"></i>
-                                                    <input type="text" name="date" placeholder="Tour Date" id="datepicker">
+                                                    <input type="text" name="tour_date" placeholder="Tour Date" id="datepicker">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-12 col-sm-12 column">
                                                 <div class="form-group">
                                                     <i class="far fa-clock"></i>
-                                                    <input type="text" name="time" placeholder="Any Time">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 col-md-12 col-sm-12 column">
-                                                <div class="form-group">
-                                                    <input type="text" name="name" placeholder="Your Name" required="">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 col-md-12 col-sm-12 column">
-                                                <div class="form-group">
-                                                    <input type="email" name="email" placeholder="Your Email" required="">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 col-md-12 col-sm-12 column">
-                                                <div class="form-group">
-                                                    <input type="tel" name="phone" placeholder="Your Phone" required="">
+                                                    <input type="text" name="tour_time" placeholder="Any Time">
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 col-md-12 col-sm-12 column">
@@ -229,6 +224,8 @@
                                     </form>
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12 sidebar-side">

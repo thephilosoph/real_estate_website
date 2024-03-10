@@ -8,7 +8,7 @@
 <meta name="csrf-token" content="{{csrf_token()}}">
 
 
-<title>Real Estate</title>
+<title>@yield('title')</title>
 
 <!-- Fav Icon -->
 <link rel="icon" href="{{asset('frontend/assets/images/favicon.ico')}}" type="image/x-icon">
@@ -45,7 +45,7 @@
 
 
         <!-- switcher menu -->
-   
+
         <!-- end switcher menu -->
 
 
@@ -122,34 +122,34 @@
             dataType: "json",
             url: "/add-to-wishlist/"+property_id,
             success :function(data){
-                
- // Start Message 
+
+ // Start Message
 
             const Toast = Swal.mixin({
                   toast: true,
                   position: 'top-end',
-                  
+
                   showConfirmButton: false,
-                  timer: 3000 
+                  timer: 3000
             })
             if ($.isEmptyObject(data.error)) {
-                    
+
                     Toast.fire({
                     type: 'success',
-                    icon: 'success', 
-                    title: data.success, 
+                    icon: 'success',
+                    title: data.success,
                     })
 
             }else{
-               
+
            Toast.fire({
                     type: 'error',
-                    icon: 'error', 
-                    title: data.error, 
+                    icon: 'error',
+                    title: data.error,
                     })
                 }
 
-              // End Message  
+              // End Message
 
 
             }
@@ -163,7 +163,7 @@
             type: "GET",
             dataType: "json",
             url: "/getWishListProperty/",
-            
+
             success:function(response){
                 $('#wishlistcount').text(response.wishlistcount);
 
@@ -184,7 +184,7 @@
                 <h6>Start From</h6>
                 <h4>$${value.property.min_price}</h4>
             </div>
-            
+
         </div>
         <ul class="more-details clearfix">
             <li><i class="icon-14"></i>${value.property.bedrooms} Beds</li>
@@ -210,8 +210,8 @@
 
 
     wishlist();
-    
-    
+
+
 
 
     function wishlistRemove(id) {
@@ -221,33 +221,33 @@
         url: "/wishlistRemove/"+id,
 
         success: function (data) {
-            wishlist(); 
+            wishlist();
 
             const Toast = Swal.mixin({
                   toast: true,
                   position: 'top-end',
-                  
+
                   showConfirmButton: false,
-                  timer: 3000 
+                  timer: 3000
             })
             if ($.isEmptyObject(data.error)) {
-                    
+
                     Toast.fire({
                     type: 'success',
-                    icon: 'success', 
-                    title: data.success, 
+                    icon: 'success',
+                    title: data.success,
                     })
 
             }else{
-               
+
            Toast.fire({
                     type: 'error',
-                    icon: 'error', 
-                    title: data.error, 
+                    icon: 'error',
+                    title: data.error,
                     })
                 }
 
-              // End Message  
+              // End Message
 
         }
     })
@@ -269,28 +269,28 @@ function addToCompare(id) {
             const Toast = Swal.mixin({
                   toast: true,
                   position: 'top-end',
-                  
+
                   showConfirmButton: false,
-                  timer: 3000 
+                  timer: 3000
             })
             if ($.isEmptyObject(data.error)) {
-                    
+
                     Toast.fire({
                     type: 'success',
-                    icon: 'success', 
-                    title: data.success, 
+                    icon: 'success',
+                    title: data.success,
                     })
 
             }else{
-               
+
            Toast.fire({
                     type: 'error',
-                    icon: 'error', 
-                    title: data.error, 
+                    icon: 'error',
+                    title: data.error,
                     })
                 }
 
-              // End Message  
+              // End Message
 
         }
     })
@@ -308,7 +308,7 @@ function addToCompare(id) {
             type: "GET",
             dataType: "json",
             url: "/getCompareProperty/",
-            
+
             success:function(response){
                 console.log(response);
                 var rows = ""
@@ -321,8 +321,8 @@ function addToCompare(id) {
                                     <div class="title">${value.property.property_name}</div>
                                     <div class="price">$${value.property.min_price}</div>
                                 </th>
-                               
-                            </tr>    
+
+                            </tr>
                             <tr>
                                 <td>
                                     <p>City</p>
@@ -330,7 +330,7 @@ function addToCompare(id) {
                                 <td>
                                     <p>${value.property.city}</p>
                                 </td>
-                                
+
                             </tr>
                             <tr>
                                 <td>
@@ -339,7 +339,7 @@ function addToCompare(id) {
                                 <td>
                                     <p>${value.property.property_size} Sq Ft</p>
                                 </td>
-                                
+
                             </tr>
                             <tr>
                                 <td>
@@ -348,7 +348,7 @@ function addToCompare(id) {
                                 <td>
                                     <p>${value.property.bedrooms} </p>
                                 </td>
-                                
+
                             </tr>
                             <tr>
                                 <td>
@@ -357,7 +357,7 @@ function addToCompare(id) {
                                 <td>
                                     <p>${value.property.bathrooms} </p>
                                 </td>
-                                
+
                             </tr>
                             <tr>
                                 <td>
@@ -366,7 +366,7 @@ function addToCompare(id) {
                                 <td>
                                     <p>${value.property.garage} </p>
                                 </td>
-                                
+
                             </tr>
                             <tr>
                                 <td>
@@ -376,7 +376,7 @@ function addToCompare(id) {
                                     <a type="submit" class="text-body" id=${value.id} onclick="compareRemove(this.id)"><i class="fa fa-trash"></i></a>
                                 </td>
                                 </tr>
-                            
+
                             `
 
                 });
@@ -392,32 +392,32 @@ function addToCompare(id) {
         url: "/compareRemove/"+id,
 
         success: function (data) {
-            compare(); 
+            compare();
             const Toast = Swal.mixin({
                   toast: true,
                   position: 'top-end',
-                  
+
                   showConfirmButton: false,
-                  timer: 3000 
+                  timer: 3000
             })
             if ($.isEmptyObject(data.error)) {
-                    
+
                     Toast.fire({
                     type: 'success',
-                    icon: 'success', 
-                    title: data.success, 
+                    icon: 'success',
+                    title: data.success,
                     })
 
             }else{
-               
+
            Toast.fire({
                     type: 'error',
-                    icon: 'error', 
-                    title: data.error, 
+                    icon: 'error',
+                    title: data.error,
                     })
                 }
 
-              // End Message  
+              // End Message
 
         }
     })
@@ -427,7 +427,7 @@ function addToCompare(id) {
     compare();
 
 
-    
+
 
     </script>
 

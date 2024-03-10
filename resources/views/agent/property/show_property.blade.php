@@ -80,7 +80,7 @@
 
                                         <tr>
                                             <th>Property State</th>
-                                            <td><code>{{$property['state']['state_name']}}</code></td>
+                                            <td><code>{{$property['pstate']['state_name']}}</code></td>
                                         </tr>
 
                                         <tr>

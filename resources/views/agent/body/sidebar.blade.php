@@ -67,6 +67,14 @@
           </a>
         </li>
 
+              <li class="nav-item">
+                  <a href="{{route('agent.schedule.request')}}" class="nav-link">
+                      <i class="link-icon" data-feather="calendar"></i>
+                      <span class="link-title">Schedule Request</span>
+                  </a>
+              </li>
+
+
         <li class="nav-item nav-category">Components</li>
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#uiComponents" role="button" aria-expanded="false" aria-controls="uiComponents">
@@ -82,7 +90,7 @@
               <li class="nav-item">
                 <a href="pages/ui-components/alerts.html" class="nav-link">Alerts</a>
               </li>
-              
+
             </ul>
           </div>
         </li>
@@ -100,13 +108,13 @@
               <li class="nav-item">
                 <a href="pages/advanced-ui/owl-carousel.html" class="nav-link">Owl carousel</a>
               </li>
-              
+
             </ul>
           </div>
         </li>
         @else
 
-        
+
 
         @endif
         <li class="nav-item nav-category">Docs</li>

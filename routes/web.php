@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Backend\BlogController;
+use App\Http\Controllers\Backend\SettingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
@@ -10,6 +12,7 @@ use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Backend\AminityController;
 use App\Http\Controllers\Backend\PropertyController;
 use App\Http\Controllers\Backend\StateController;
+use App\Http\Controllers\Backend\TestimonialController;
 use App\Http\Controllers\Frontend\CompareController;
 use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\Agent\AgentPropertyController;
@@ -41,6 +44,16 @@ Route::post('agent/details/message', [IndexController::class, 'agentDetailsMessa
 Route::get('/rent/property', [IndexController::class, 'rentProperty'])->name('rent.property');
 Route::get('/buy/property', [IndexController::class, 'buyProperty'])->name('buy.property');
 Route::get('/type/property/{id}', [IndexController::class, 'typeProperty'])->name('property.type');
+Route::get('/state/details/{id}', [IndexController::class, 'stateProperty'])->name('state.details');
+Route::post('/buy/property/search', [IndexController::class, 'buyPropertySearch'])->name('buy.property.search');
+Route::post('/rent/property/search', [IndexController::class, 'rentPropertySearch'])->name('rent.property.search');
+Route::post('/all/property/search', [IndexController::class, 'allPropertySearch'])->name('all.property.search');
+Route::get('/blog/details/{slug}', [BlogController::class, 'blogDetails']);
+Route::get('/blog/category/list/{id}', [BlogController::class, 'blogCategoryList']);
+Route::get('/blog/list', [BlogController::class, 'blogList'])->name('blog.list');
+Route::post('/store/comment', [BlogController::class, 'storeComment'])->name('store.comment');
+Route::post('/store/schedule', [IndexController::class, 'storeSchedule'])->name('store.schedule');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('user/profile', [UserController::class, 'edit'])->name('user.profile.edit');
@@ -48,6 +61,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/logout', [UserController::class, 'destroy'])->name("user.logout");
     Route::post('/user/password/update', [UserController::class, 'updatePassword'])->name("user.password.update");
     Route::get('/user/password/update', [UserController::class, 'editPassword'])->name("user.password.edit");
+    Route::get('/user/schedule/request', [UserController::class, 'userScheduleRequest'])->name("user.schedule.request");
+
+
 
 Route::controller(WishlistController::class)->group(function(){
 
@@ -113,6 +129,34 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     });
 
 
+    Route::controller(TestimonialController::class)->group(function () {
+        Route::get('/all/testimonial', 'allTestimonial')->name('all.testimonial');
+        Route::get('/add/testimonial', 'addTestimonial')->name('add.testimonial');
+        Route::post('/store/testimonial', 'storeTestimonial')->name('store.testimonial');
+        Route::get('/edit/testimonial/{id}', 'editTestimonial')->name('edit.testimonial');
+        Route::post('/edit/testimonial', 'updateTestimonial')->name('update.testimonial');
+        Route::get('/delete/testimonial/{id}', 'deleteTestimonial')->name('delete.testimonial');
+    });
+
+    Route::controller(\App\Http\Controllers\Backend\BlogController::class)->group(function () {
+        Route::get('/all/blog/category', 'allBlogCategory')->name('all.blog.category');
+        Route::post('/store/blog/category', 'storeBlogCategory')->name('store.blog.category');
+        Route::get('/blog/category/{id}', 'editBlogCategory')->name('edit.blog.category');
+        Route::post('/edit/blog/category', 'updateBlogCategory')->name('update.blog.category');
+        Route::get('/delete/blog/category/{id}', 'deleteBlogCategory')->name('delete.blog.category');
+
+        Route::get('/all/post', 'allPost')->name('all.post');
+        Route::get('/add/post', 'addPost')->name('add.post');
+        Route::post('/store/post', 'storePost')->name('store.post');
+        Route::get('/edit/post/{id}', 'editPost')->name('edit.post');
+        Route::post('/edit/post', 'updatePost')->name('update.post');
+        Route::get('/delete/post/{id}', 'deletePost')->name('delete.post');
+
+
+        Route::get('admin/blog/comment','adminBlogComment')->name('admin.blog.comment');
+        Route::get('admin/blog/comment/reply/{id}','adminCommentReply')->name('admin.comment.reply');
+        Route::post('reply/comment','commentReply')->name('store.reply');
+    });
 
 
     Route::controller(PropertyController::class)->group(function () {
@@ -155,6 +199,19 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     });
 
 
+    Route::controller(SettingController::class)->group(function () {
+        Route::get('/smtp/setting', 'smtpSetting')->name('smtp.setting');
+        Route::post('/update/smtp/setting', 'updateSmtpSetting')->name('update.smtp.setting');
+
+    });
+
+//site setting
+    Route::controller(SettingController::class)->group(function () {
+        Route::get('/site/setting', 'siteSetting')->name('site.setting');
+        Route::post('/update/site/setting', 'updateSiteSetting')->name('update.site.setting');
+
+    });
+
 
 });
 
@@ -193,8 +250,12 @@ Route::middleware(['auth', 'role:agent'])->group(function () {
         Route::get('/package/history', 'packageHistory')->name('package.history');
         Route::get('/agent/package/invoice/{id}', 'agentPackageInvoice')->name('agent.package.invoice');
 
-        Route::get('/agent/peroperty/message', 'agentPropertyMessage')->name('agent.property.message');
+        Route::get('/agent/property/message', 'agentPropertyMessage')->name('agent.property.message');
         Route::get('/agent/message/details/{id}', 'agentMessageDetails')->name('agent.message.details');
+
+        Route::get('/agent/schedule/request', 'agentScheduleRequest')->name('agent.schedule.request');
+        Route::get('/agent/schedule/details/{id}', 'agentScheduleDetails')->name('show.details.schedule');
+        Route::post('/agent/schedule/update', 'agentUpdateSchedule')->name('update.schedule.status');
 
 
     });

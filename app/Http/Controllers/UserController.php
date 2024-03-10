@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -64,7 +65,7 @@ class UserController extends Controller
     public function editPassword(){
 
         $user = Auth::user();
-       
+
         return view('frontend.dashboard.change_password',compact('user'));
     }
 
@@ -91,4 +92,12 @@ class UserController extends Controller
         return redirect()->back()->with($notification);
 
     }
+
+    public function userScheduleRequest()
+    {
+        $user= Auth::user();
+        $requests = Schedule::where('user_id',$user->id)->get();
+        return view('frontend.message.schedule_request',compact('requests'));
+    }
+
 }

@@ -5,11 +5,11 @@
 
 <div class="page-content">
 
-    
+
     <div class="row profile-body">
       <!-- middle wrapper start -->
       <div class="col-md-12 col-xl-12 middle-wrapper">
-        <div class="row"> 
+        <div class="row">
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">Edit Property</h6>
@@ -102,8 +102,12 @@
                                 <div class="col-sm-3">
                                     <div class="mb-3">
                                         <label class="form-label">State</label>
-                                        <input value="{{$property->state}}" type="text" class="form-control" name="state">
-                                    </div>
+                                        <select name="state" class="form-select" id="form-select">
+                                            <option selected disabled>Select State</option>
+                                            @foreach ($states as $state)
+                                                <option {{$property['state'] == $state->id ? 'selected' :""}} value="{{$state->id}}">{{$state->state_name}}</option>
+                                            @endforeach
+                                        </select>                                    </div>
                                 </div><!-- Col -->
 
                                 <div class="col-sm-3">
@@ -136,7 +140,7 @@
                                     </div>
                                 </div><!-- Col -->
 
-                                
+
                             </div><!-- Row -->
 
 
@@ -179,10 +183,10 @@
                                             @foreach ($aminities as $aminity)
                                             <option {{(in_array($aminity->id,$property_aminities))  ? 'selected' :""}} value="{{$aminity->id}}">{{$aminity->name}}</option>
                                             @endforeach
-                                        </select>                                   
+                                        </select>
                                      </div>
                                 </div><!-- Col -->
-                                
+
                             </div><!-- Row -->
 
 
@@ -221,12 +225,12 @@
                                   </label>
                                 </div>
                             </div>
-         
+
                          <button type="submit" class="btn btn-primary submit">Submit form</button>
                         </form>
                 </div>
             </div>
-  
+
         </div>
       </div>
 
@@ -241,11 +245,11 @@
 
 <div class="page-content" style="margin-top: -35px ">
 
-    
+
     <div class="row profile-body">
       <!-- middle wrapper start -->
       <div class="col-md-12 col-xl-12 middle-wrapper">
-        <div class="row"> 
+        <div class="row">
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">Edit Property</h6>
@@ -281,11 +285,11 @@
 {{-- --------------------------MULTI Images----------------------------------------------}}
 <div class="page-content" style="margin-top: -35px ">
 
-    
+
     <div class="row profile-body">
       <!-- middle wrapper start -->
       <div class="col-md-12 col-xl-12 middle-wrapper">
-        <div class="row"> 
+        <div class="row">
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">Edit Property</h6>
@@ -304,13 +308,13 @@
                         </thead>
                         <tbody>
                             @foreach ($multiImages as $key => $image)
-                                
+
                             <tr>
                                 <td>{{$key+1}}</td>
                                 <td class="py-1">
                                     <img src="{{asset($image->photo_name)}}" style="width: 50px; height: 50px;" alt="image">
                                 </td>
-                               
+
                                 <td>
                                 <input type="file" name="multi_img[{{$image->id}}]" class="form-control" id="multiImg" >
                                 </td>
@@ -323,12 +327,12 @@
                                     <a href="{{route('delete.agent.property.multiimage',$image->id)}}" class="btn btn-danger" id="delete">Delete</a>
                                 </td>
                             </tr>
-                            
+
                             @endforeach
                         </tbody>
                     </table>
                 </div>
-<br><br>    
+<br><br>
                         </form>
 
 
@@ -349,7 +353,7 @@
     </td>
 </tr>
                     </tbody>
-                </table> 
+                </table>
 
             </form>
         </div>
@@ -367,26 +371,26 @@
 
 <div class="page-content" style="margin-top: -35px ">
 
-    
+
     <div class="row profile-body">
       <!-- middle wrapper start -->
       <div class="col-md-12 col-xl-12 middle-wrapper">
-        <div class="row"> 
+        <div class="row">
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">Edit Property FAcilities</h6>
                         <form id="myForm" method="POST" action="{{route('update.agent.property.facilities')}}" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="property_id" value="{{$property->id}}">
-                            
+
                             @foreach ($facilities as $facility)
                         <div class="row add_item">
-                                
+
                             <div class="whole_extra_item_add" id="whole_extra_item_add">
                             <div class="whole_extra_item_delete" id="whole_extra_item_delete">
                                 <div class="container mt-2">
                                    <div class="row">
-                                    
+
                                       <div class="form-group col-md-4">
                                          <label for="facility_name">Facilities</label>
                                          <select name="facility_name[]" id="facility_name" class="form-control">
@@ -440,17 +444,17 @@
                   rules: {
                     property_name: {
                           required : true,
-                      }, 
-                      
+                      },
+
                   },
                   messages :{
                     property_name: {
                           required : 'Please Enter Property Name',
-                      }, 
-                       
-      
+                      },
+
+
                   },
-                  errorElement : 'span', 
+                  errorElement : 'span',
                   errorPlacement: function (error,element) {
                       error.addClass('invalid-feedback');
                       element.closest('.form-group').append(error);
@@ -463,7 +467,7 @@
                   },
               });
           });
-          
+
       </script>
 
 
@@ -481,34 +485,34 @@ function mainThumURL(input){
 
 
 
-<script> 
- 
+<script>
+
     $(document).ready(function(){
      $('#multiImg').on('change', function(){ //on file input change
         if (window.File && window.FileReader && window.FileList && window.Blob) //check File API supported browser
         {
             var data = $(this)[0].files; //this file data
-             
+
             $.each(data, function(index, file){ //loop though each file
                 if(/(\.|\/)(gif|jpe?g|png|webp)$/i.test(file.type)){ //check supported file type
                     var fRead = new FileReader(); //new filereader
                     fRead.onload = (function(file){ //trigger function on successful read
                     return function(e) {
                         var img = $('<img/>').addClass('thumb').attr('src', e.target.result) .width(100)
-                    .height(80); //create image element 
+                    .height(80); //create image element
                         $('#preview_img').append(img); //append image to output element
                     };
                     })(file);
                     fRead.readAsDataURL(file); //URL representing the file's data.
                 }
             });
-             
+
         }else{
             alert("Your browser doesn't support File API!"); //if File API is absent
         }
      });
     });
-     
+
 //     </script>
 
 
@@ -520,7 +524,7 @@ function mainThumURL(input){
         <div class="whole_extra_item_delete" id="whole_extra_item_delete">
            <div class="container mt-2">
               <div class="row">
-               
+
                  <div class="form-group col-md-4">
                     <label for="facility_name">Facilities</label>
                     <select name="facility_name[]" id="facility_name" class="form-control">
@@ -550,10 +554,10 @@ function mainThumURL(input){
            </div>
         </div>
      </div>
-  </div>      
- 
- 
- 
+  </div>
+
+
+
               <!----For Section-------->
   <script type="text/javascript">
      $(document).ready(function(){

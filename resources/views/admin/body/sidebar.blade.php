@@ -35,9 +35,7 @@
               <li class="nav-item">
                 <a href="{{route('add.type')}}" class="nav-link">Add Property Type</a>
               </li>
-              <li class="nav-item">
-                <a href="pages/email/compose.html" class="nav-link">Compose</a>
-              </li>
+
             </ul>
           </div>
         </li>
@@ -49,7 +47,7 @@
                   <span class="link-title">Property State</span>
                   <i class="link-arrow" data-feather="chevron-down"></i>
               </a>
-              <div class="collapse" id="type">
+              <div class="collapse" id="state">
                   <ul class="nav sub-menu">
                       <li class="nav-item">
                           <a href="{{route('all.state')}}" class="nav-link">All Property States</a>
@@ -57,9 +55,7 @@
                       <li class="nav-item">
                           <a href="{{route('add.state')}}" class="nav-link">Add Property State</a>
                       </li>
-                      <li class="nav-item">
-                          <a href="pages/email/compose.html" class="nav-link">Compose</a>
-                      </li>
+
                   </ul>
               </div>
           </li>
@@ -103,6 +99,25 @@
         </li>
 
 
+
+          <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#testimonial" role="button" aria-expanded="false" aria-controls="testimonial">
+                  <i class="link-icon" data-feather="mail"></i>
+                  <span class="link-title">Testimonial Management</span>
+                  <i class="link-arrow" data-feather="chevron-down"></i>
+              </a>
+              <div class="collapse" id="testimonial">
+                  <ul class="nav sub-menu">
+                      <li class="nav-item">
+                          <a href="{{route('all.testimonial')}}" class="nav-link">All Testimonial</a>
+                      </li>
+                      <li class="nav-item">
+                          <a href="{{route('add.testimonial')}}" class="nav-link">Add Testimonial</a>
+                      </li>
+                  </ul>
+              </div>
+          </li>
+
         <li class="nav-item">
           <a href="{{route('admin.package.history')}}" class="nav-link">
             <i class="link-icon" data-feather="calendar"></i>
@@ -116,6 +131,7 @@
           </a>
         </li>
         <li class="nav-item nav-category">Components</li>
+
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#uiComponents" role="button" aria-expanded="false" aria-controls="uiComponents">
             <i class="link-icon" data-feather="feather"></i>
@@ -134,6 +150,76 @@
             </ul>
           </div>
         </li>
+
+
+
+          <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#uiComponent" role="button" aria-expanded="false" aria-controls="uiComponent">
+                  <i class="link-icon" data-feather="feather"></i>
+                  <span class="link-title">Blog Category</span>
+                  <i class="link-arrow" data-feather="chevron-down"></i>
+              </a>
+              <div class="collapse" id="uiComponent">
+                  <ul class="nav sub-menu">
+                      <li class="nav-item">
+                          <a href="{{route('all.blog.category')}}" class="nav-link">All Blog Category</a>
+                      </li>
+                  </ul>
+              </div>
+          </li>
+
+
+          <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#uiComponento" role="button" aria-expanded="false" aria-controls="uiComponento">
+                  <i class="link-icon" data-feather="feather"></i>
+                  <span class="link-title">Blog Comment</span>
+                  <i class="link-arrow" data-feather="chevron-down"></i>
+              </a>
+              <div class="collapse" id="uiComponento">
+                  <ul class="nav sub-menu">
+                      <li class="nav-item">
+                          <a href="{{route('admin.blog.comment')}}" class="nav-link">All Blog Comment</a>
+                      </li>
+                  </ul>
+              </div>
+          </li>
+
+
+
+          <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#uiComponenta" role="button" aria-expanded="false" aria-controls="uiComponenta">
+                  <i class="link-icon" data-feather="feather"></i>
+                  <span class="link-title">Posts Management</span>
+                  <i class="link-arrow" data-feather="chevron-down"></i>
+              </a>
+              <div class="collapse" id="uiComponenta">
+                  <ul class="nav sub-menu">
+                      <li class="nav-item">
+                          <a href="{{route('all.post')}}" class="nav-link">All Posts</a>
+                      </li>
+                      <li class="nav-item">
+                          <a href="{{route('add.post')}}" class="nav-link">Add Posts</a>
+                      </li>
+                  </ul>
+              </div>
+          </li>
+
+          <li class="nav-item">
+              <a href="{{route('smtp.setting')}}" class="nav-link">
+                  <i class="link-icon" data-feather="calendar"></i>
+                  <span class="link-title">SMTP Setting</span>
+              </a>
+          </li>
+
+          <li class="nav-item">
+              <a href="{{route('site.setting')}}" class="nav-link">
+                  <i class="link-icon" data-feather="calendar"></i>
+                  <span class="link-title">Site Setting</span>
+              </a>
+          </li>
+
+
+
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#advancedUI" role="button" aria-expanded="false" aria-controls="advancedUI">
             <i class="link-icon" data-feather="anchor"></i>

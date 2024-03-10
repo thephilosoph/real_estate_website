@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\Schedule;
+use App\Models\State;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Aminity;
@@ -132,6 +134,101 @@ class IndexController extends Controller
         return view('frontend.property.type_property',compact('properties','forRent','forBuy'));
     }
 
+    public function stateProperty($id)
+    {
+$properties = Property::where('status',1)->where('state',$id)->paginate(3);
+$state = State::where('id',$id)->first();
+        $forRent = Property::where('property_status' , 'rent')->count();
+        $forBuy = Property::where('property_status' , 'buy')->count();
+return view('frontend.property.state_property',compact('properties','state','forRent','forBuy'));
+    }
 
+    public function buyPropertySearch(Request $request)
+    {
+            $request->validate(['search'=>'required']);
+            $items = $request->search;
+            $state = $request->state;
+            $type = $request->type;
+//            dd($request);
+
+            $properties = Property::where('property_name','like','%'.$items.'%')->where('property_status','buy')
+                ->with('type','pstate')
+                ->whereHas('pstate',function ($q) use ($state){
+                    $q->where('state_name','like','%'.$state."%");
+                })->whereHas('type', function ($q) use ($type){
+                    $q->where('name' , 'like' , '%'. $type . '%');
+                })->paginate(3);
+//            dd($properties);
+            return view('frontend.property.search',compact('properties'));
+    }
+
+    public function rentPropertySearch(Request $request)
+    {
+        $request->validate(['search'=>'required']);
+        $items = $request->search;
+        $state = $request->state;
+        $type = $request->type;
+//            dd($request);
+
+        $properties = Property::where('property_name','like','%'.$items.'%')->where('property_status','rent')
+            ->with('type','pstate')
+            ->whereHas('pstate',function ($q) use ($state){
+                $q->where('state_name','like','%'.$state."%");
+            })->whereHas('type', function ($q) use ($type){
+                $q->where('name' , 'like' , '%'. $type . '%');
+            })->paginate(3);
+//            dd($properties);
+        return view('frontend.property.search',compact('properties'));
+    }
+
+    public function allPropertySearch(Request $request)
+    {
+        $status = $request->pstatus;
+        $state = $request->pstate;
+        $type = $request->ptype;
+        $rooms_number = $request->rooms_number;
+        $bathrooms_number = $request->bathrooms_number;
+//            dd($request);
+
+        $properties = Property::where('status',1)->where('property_status',$status)
+            ->where('bedrooms',$rooms_number)->where('bathrooms',$bathrooms_number)
+            ->with('type','pstate')
+            ->whereHas('pstate',function ($q) use ($state){
+                $q->where('state_name','like','%'.$state."%");
+            })->whereHas('type', function ($q) use ($type){
+                $q->where('name' , 'like' , '%'. $type . '%');
+            })->paginate(3);
+//            dd($properties);
+        return view('frontend.property.search',compact('properties'));
+    }
+
+
+    public function storeSchedule(Request $request)
+    {
+        if (Auth::check()){
+            Schedule::insert([
+                'user_id' =>Auth::user()->id,
+                'agent_id'=>$request->agent_id,
+                'property_id'=>$request->property_id,
+                'tour_date'=>$request->tour_date,
+                'tour_time'=>$request->tour_time,
+                'message'=>$request->message,
+                'created_at'=>Carbon::now(),
+            ]);
+
+            $notification = array(
+                'message'=>"message have been sent",
+                "alert_type"=>"success"
+            );
+            return redirect()->back()->with($notification);
+        }else{
+
+            $notification = array(
+                'message'=>"Login to your Account first",
+                "alert_type"=>"error"
+            );
+            return redirect()->back()->with($notification);
+        }
+    }
 }
 
