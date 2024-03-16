@@ -6,8 +6,9 @@
 
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
+            @if(\Illuminate\Support\Facades\Auth::user()->can('add.property'))
             <a href="{{route('add.property')}}" class="btn btn-inverse-info">Add Property</a>
-           
+            @endif
         </ol>
     </nav>
 
@@ -33,7 +34,7 @@
         </thead>
         <tbody>
             @foreach ($properties as $key => $item)
-                
+
             <tr>
                 <td>{{$key+1}}</td>
                 <td><img src="{{asset($item->property_thumbnail)}}" style="width:70px; height:40px;"  ></td>
@@ -49,16 +50,20 @@
                     <span class="badge rounded-pill bg-danger">InActive</span>
                     @endif
                    </td>
-                
+
                 <td>
                     <a href="{{route('show.property',$item->id)}}" class="btn btn-inverse-info" title="Details"><i data-feather="eye"></i></a>
+                    @if(\Illuminate\Support\Facades\Auth::user()->can('edit.property'))
                     <a href="{{route('edit.property',$item->id)}}" class="btn btn-inverse-warning" title="Edite"><i data-feather="edit"></i></a>
+                    @endif
+                    @if(\Illuminate\Support\Facades\Auth::user()->can('delete.property'))
                     <a href="{{route('delete.property',$item->id)}}" class="btn btn-inverse-danger" id="delete" title="Delete"><i data-feather="trash-2"></i></a>
+                    @endif
                 </td>
-                
+
             </tr>
             @endforeach
-          
+
         </tbody>
       </table>
     </div>

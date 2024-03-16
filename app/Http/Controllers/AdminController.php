@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
+use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {
@@ -72,7 +73,7 @@ class AdminController extends Controller
     public function editPassword(){
 
         $user = Auth::user();
-       
+
         return view('admin.change_password',compact('user'));
     }
 
@@ -107,7 +108,7 @@ class AdminController extends Controller
         return view('backend.agentuser.all_agents' , compact('agents'));
     }
     public function addAgent(){
-        
+
         return view('backend.agentuser.add_agent' );
     }
 
@@ -130,7 +131,7 @@ class AdminController extends Controller
         ]);
         return redirect()->route('all.agent')->with($notification);
     }
-    
+
 
     public function editAgent($id){
         $agent = User::findOrFail($id);
@@ -153,7 +154,7 @@ class AdminController extends Controller
             "message"=>"Agent have Updated successfully",
             "alert-type"=>"success",
         ]);
-        
+
         return redirect()->route('all.agent')->with($notification);
     }
 
@@ -177,5 +178,98 @@ class AdminController extends Controller
             'status' => $request->status,
         ]);
         return response()->json(['success'=>'status changed successfully']);
+    }
+
+
+    public function allAdmin()
+    {
+        $admins = User::where('role','admin')->get();
+        return view('backend.pages.admin.all_admin',compact('admins'));
+    }
+
+    public function addAdmin()
+    {
+        $roles = Role::all();
+        return view('backend.pages.admin.add_admin',compact('roles'));
+    }
+
+    public function storeAdmin(Request $request)
+    {
+        $user = new User();
+        $user->username = $request->username ;
+        $user->name = $request->name ;
+        $user->email = $request->email ;
+        $user->phone = $request->phone ;
+        $user->address = $request->address ;
+        $user->password = Hash::make($request->password) ;
+        $user->role = 'admin' ;
+        $user->status = 'active' ;
+
+        $user->save();
+
+        if ($request->role_id)
+        {
+            $user->assignRole($request->role_id);
+        }
+
+        $notification = array([
+            "message"=>"Admin have created successfully",
+            "alert-type"=>"success",
+        ]);
+
+        return redirect()->route('all.admin')->with($notification);
+    }
+
+
+
+    public function editAdmin($id)
+    {
+        $admin = User::findOrFail($id);
+        $roles = Role::all();
+        return view('backend.pages.admin.edit_admin',compact('roles','admin'));
+    }
+
+
+    public function updateAdmin(Request $request)
+    {
+        $user =  User::findOrFail($request->id);
+        $user->username = $request->username ;
+        $user->name = $request->name ;
+        $user->email = $request->email ;
+        $user->phone = $request->phone ;
+        $user->address = $request->address ;
+        $user->password = Hash::make($request->password) ;
+        $user->update();
+
+        if($user->roles()){
+        $user->roles()->detach();
+        }
+        if ($request->role_id)
+        {
+            $user->assignRole($request->role_id);
+        }
+
+        $notification = array([
+            "message"=>"Admin have Updated successfully",
+            "alert-type"=>"success",
+        ]);
+
+        return redirect()->route('all.admin')->with($notification);
+    }
+
+    public function deleteAdmin($id)
+    {
+        $user = User::findOrFail($id);
+        if (!is_null($user)){
+            $user->delete();
+        }
+
+        $notification = array([
+            "message"=>"Admin have Deleted successfully",
+            "alert-type"=>"success",
+        ]);
+
+        return redirect()->back()->with($notification);
+
     }
 }

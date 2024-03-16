@@ -6,8 +6,9 @@
 
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
-            <a href="{{route('add.state')}}" class="btn btn-inverse-info">Add State</a>
-
+            @if(\Illuminate\Support\Facades\Auth::user()->can('add.type'))
+            <a href="{{route('add.type')}}" class="btn btn-inverse-info">Add State</a>
+            @endif
         </ol>
     </nav>
 
@@ -34,8 +35,13 @@
                 <td>{{$item->name}}</td>
                 <td>{{$item->icon}}</td>
                 <td>
+                    @if(\Illuminate\Support\Facades\Auth::user()->can('edit.type'))
                     <a href="{{route('edit.type',$item->id)}}" class="btn btn-inverse-warning">Edit</a>
+                    @endif
+                        @if(\Illuminate\Support\Facades\Auth::user()->can('delete.type'))
                     <a href="{{route('delete.type',$item->id)}}" class="btn btn-inverse-danger" id="delete">Delete</a>
+                        @endif
+
                 </td>
 
             </tr>

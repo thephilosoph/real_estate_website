@@ -7,8 +7,9 @@
 
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
+            @if(\Illuminate\Support\Facades\Auth::user()->can('add.agent'))
             <a href="{{route('add.agent')}}" class="btn btn-inverse-info">Add Agent</a>
-            
+            @endif
         </ol>
     </nav>
 
@@ -32,7 +33,7 @@
         </thead>
         <tbody>
             @foreach ($agents as $key => $agent)
-                
+
             <tr>
                 <td>{{$key+1}}</td>
                 <td><img src="{{(!empty($user->photo)) ? url('uploade/agent_images/'.$user->photo) : url('uploade/no_image.jpg')}}" style="width:70px; height:40px;"  ></td>
@@ -46,21 +47,24 @@
                     @endif
                    </td>
                    <td>
-                    <input type="checkbox"  data-id="{{$agent->id}}" class="toggle-class" 
-                    data-onstyle="success" data-offstyle="dander" 
+                    <input type="checkbox"  data-id="{{$agent->id}}" class="toggle-class"
+                    data-onstyle="success" data-offstyle="dander"
                     data-toggle="toggle" data-on="active" data-off="inactive" {{$agent->status ? 'checked' : ''}}>
                    </td>
-                
-                
+
+
                 <td>
-                    {{-- <a href="{{route('show.property',$item->id)}}" class="btn btn-inverse-info" title="Details"><i data-feather="eye"></i></a> --}}
+                    @if(\Illuminate\Support\Facades\Auth::user()->can('edit.agent'))
                     <a href="{{route('edit.agent',$agent->id)}}" class="btn btn-inverse-warning" title="Edite"><i data-feather="edit"></i></a>
+                    @endif
+                    @if(\Illuminate\Support\Facades\Auth::user()->can('delete.agent'))
                     <a href="{{route('delete.agent',$agent->id)}}" class="btn btn-inverse-danger" id="delete" title="Delete"><i data-feather="trash-2"></i></a>
+                    @endif
                 </td>
-                
+
             </tr>
             @endforeach
-          
+
         </tbody>
       </table>
     </div>
@@ -75,9 +79,9 @@
 <script type="text/javascript">
   $(function() {
     $('.toggle-class').change(function() {
-        var status = $(this).prop('checked') == true ? 1 : 0; 
-        var user_id = $(this).data('id'); 
-         
+        var status = $(this).prop('checked') == true ? 1 : 0;
+        var user_id = $(this).data('id');
+
         $.ajax({
             type: "GET",
             dataType: "json",
@@ -86,31 +90,31 @@
             success: function(data){
               // console.log(data.success)
 
-                // Start Message 
+                // Start Message
 
             const Toast = Swal.mixin({
                   toast: true,
                   position: 'top-end',
-                  icon: 'success', 
+                  icon: 'success',
                   showConfirmButton: false,
-                  timer: 3000 
+                  timer: 3000
             })
             if ($.isEmptyObject(data.error)) {
-                    
+
                     Toast.fire({
                     type: 'success',
-                    title: data.success, 
+                    title: data.success,
                     })
 
             }else{
-               
+
            Toast.fire({
                     type: 'error',
-                    title: data.error, 
+                    title: data.error,
                     })
                 }
 
-              // End Message   
+              // End Message
 
 
             }

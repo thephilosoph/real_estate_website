@@ -6,9 +6,16 @@
 
         <nav class="page-breadcrumb">
             <ol class="breadcrumb">
-                @if(\Illuminate\Support\Facades\Auth::user()->can('add.testimonial'))
-                <a href="{{route('add.testimonial')}}" class="btn btn-inverse-info">Add Testimonial</a>
-                @endif
+                <a href="{{route('add.permission')}}" class="btn btn-inverse-info">Add Permission</a>
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                <a href="{{route('import')}}" class="btn btn-inverse-warning">Import</a>
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                <a href="{{route('export')}}" class="btn btn-inverse-danger">Export</a>
+
             </ol>
         </nav>
 
@@ -16,33 +23,27 @@
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title">Data Table</h6>
+                        <h6 class="card-title">Permissions</h6>
                         <div class="table-responsive">
                             <table id="dataTableExample" class="table">
                                 <thead>
                                 <tr>
                                     <th>SL</th>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Image</th>
+                                    <th>Permission Name</th>
+                                    <th>Group Name</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($testimonials as $key => $item)
+                                @foreach ($permissions as $key => $item)
 
                                     <tr>
                                         <td>{{$key+1}}</td>
                                         <td>{{$item->name}}</td>
-                                        <td>{{$item->position}}</td>
-                                        <td><img src="{{asset($item->image)}}" style="width:70px; height:40px;"></td>
+                                        <td>{{$item->groupe_name}}</td>
                                         <td>
-                                            @if(\Illuminate\Support\Facades\Auth::user()->can('edit.testimonial'))
-                                            <a href="{{route('edit.testimonial',$item->id)}}" class="btn btn-inverse-warning">Edit</a>
-                                            @endif
-                                                @if(\Illuminate\Support\Facades\Auth::user()->can('delete.testimonial'))
-                                            <a href="{{route('delete.testimonial',$item->id)}}" class="btn btn-inverse-danger" id="delete">Delete</a>
-                                                @endif
+                                            <a href="{{route('edit.permission',$item->id)}}" class="btn btn-inverse-warning">Edit</a>
+                                            <a href="{{route('delete.permission',$item->id)}}" class="btn btn-inverse-danger" id="delete">Delete</a>
                                         </td>
 
                                     </tr>
